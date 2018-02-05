@@ -43,7 +43,16 @@ public class Lab1 {
     //Example: 2 6
     //Answer: 2 + 3 + 4 + 5 + 6 = 20
     private static void task2() {
-        // ADD YOUR CODE HERE
+        Scanner scanner = new Scanner(System.in);
+        System.out.printf("Enter two numbers\n");
+        int x = scanner.nextInt();
+        int y = scanner.nextInt();
+        // Homework: if x > y, then swap them
+        int sum = 0;
+        for (int i = x; i <= y; i++)
+            sum = sum + i;
+        
+        System.out.printf("The summation is: %d\n", sum);
     }
     
     //Task 3: Read a number n from the user then read
@@ -51,6 +60,8 @@ public class Lab1 {
     //n numbers.
     private static void task3() {
         // ADD YOUR CODE HERE
+        //Homework: try to find the geometric and harmonic
+        //mean, as well
     }
     
     //Task 4: Read a number n from the user then read
@@ -59,7 +70,24 @@ public class Lab1 {
     //Hint: find the min and the max and print max - min.
     //Example: 5 3 7 1 6 4
     private static void task4() {
-        // ADD YOUR CODE HERE
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.printf("Enter the number of elements\n");
+        int n = scanner.nextInt();
+        // What is the largest value for a 
+        // 32 bit signed integer?
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            int num = scanner.nextInt();
+            if (num < min)
+                min = num;
+            if (num > max)
+                max = num;
+        }
+        
+        int maxDistance = max - min;
+        System.out.printf("Largest distance: %d\n", maxDistance);
     }
     
     /**
@@ -67,9 +95,9 @@ public class Lab1 {
      */
     public static void main(String[] args) {
 //        task1();
-        task2();
+//        task2();
 //        task3();
-//        task4();
+        task4();
         
     }
     
