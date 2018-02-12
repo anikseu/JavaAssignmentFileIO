@@ -36,9 +36,9 @@ public class OOPDemo {
                 s1.getStudentName(), s1.getAddress(), s1.getHscGpa());
         
         
-        RationalNumber a = new RationalNumber(10, 3);
+        RationalNumber a = new RationalNumber(10, 6);
         RationalNumber b = new RationalNumber(2, 3);
-        RationalNumber c = a.subtract(b);
+        RationalNumber c = a.add(b);
         
         a.print();
         b.print();
