@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bank.account.demo;
+package account;
 
 /**
  *
@@ -14,7 +14,7 @@ public class BankAccount {
     private long accountId;
     private String accountName;
     private String address;
-    private double balance;
+    protected double balance;
 
     public BankAccount(long accountId, String accountName, String address, double balance) {
         this.accountId = accountId;
@@ -46,7 +46,7 @@ public class BankAccount {
     }
 
     public void print() {
-        System.out.printf("Id: %d Name: %s Address: %s Balance: %.2f\n", accountId, accountName, address, balance);
+        System.out.printf("ID: %d NAME: %s ADDRESS: %s BALANCE: %.2f\n", accountId, accountName, address, balance);
     }
 
     public long getAccountId() {

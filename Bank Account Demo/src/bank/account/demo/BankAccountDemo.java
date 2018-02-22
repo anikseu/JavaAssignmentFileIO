@@ -5,6 +5,11 @@
  */
 package bank.account.demo;
 
+import account.CurrentAccount2;
+import account.CurrentAccount;
+import account.CreditCard;
+import account.BankAccount;
+
 /**
  *
  * @author kmhasan
@@ -19,6 +24,7 @@ public class BankAccountDemo {
         BankAccount b2 = new BankAccount(6587, "Md. Ashiqur Rahman", "Notun Bazaar", 6000);
         CurrentAccount b3 = new CurrentAccount(8741, "Md. Hasan Tareque", "Shantinagar", 1000);
         CreditCard b4 = new CreditCard(4200, "Md. Rakibul Hasan", "Uttara", 50000);
+        CurrentAccount2 b5 = new CurrentAccount2(5568, "Sadman Sakib", "Dhanmondi", 5000);
         
         b1.deposit(5000);
         b1.withdraw(1000);
@@ -35,10 +41,13 @@ public class BankAccountDemo {
         b4.deposit(500);
         b4.withdraw(20000);
         
+        b5.withdraw(1000);
+        
         b1.print();
         b2.print();
         b3.print();
         b4.print();
+        b5.print();
     }
     
 }
