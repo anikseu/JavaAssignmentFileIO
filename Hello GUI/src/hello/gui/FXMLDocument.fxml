@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9" fx:controller="hello.gui.FXMLDocumentController">
+   <children>
+      <TextField fx:id="firstTextField" layoutX="14.0" layoutY="14.0" />
+      <Button fx:id="copyButton" layoutX="194.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCopyAction" text="Copy" />
+      <TextField fx:id="secondTextField" layoutX="14.0" layoutY="51.0" />
+      <Label layoutX="14.0" layoutY="84.0" text="Homework (hint: use charAt method and a for loop)" />
+      <Label layoutX="14.0" layoutY="109.0" text="Vowel count" />
+      <TextField layoutX="103.0" layoutY="104.0" prefHeight="26.0" prefWidth="80.0" />
+   </children>
+</AnchorPane>
