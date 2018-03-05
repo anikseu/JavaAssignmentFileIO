@@ -7,17 +7,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="263.0" prefWidth="340.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="text.analyzer.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="281.0" prefWidth="539.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="text.analyzer.FXMLDocumentController">
    <children>
-      <HBox layoutX="14.0" layoutY="14.0">
+      <HBox layoutX="14.0" layoutY="14.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
             <VBox layoutX="14.0" layoutY="14.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
                <children>
                   <ToolBar layoutX="14.0" layoutY="14.0">
                      <items>
                         <Label text="Filename" />
-                        <TextField layoutX="14.0" layoutY="14.0" />
-                        <Button mnemonicParsing="false" text="Open" />
+                        <TextField fx:id="filenameTextField" layoutX="14.0" layoutY="14.0" />
+                        <Button fx:id="fileOpenButton" mnemonicParsing="false" onAction="#handleFileOpenAction" text="Open" />
                      </items>
                   </ToolBar>
                   <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="306.0">
@@ -45,6 +45,7 @@
                   <Label text="Characters" GridPane.rowIndex="2" />
                   <Label text="Digits" GridPane.rowIndex="3" />
                   <Label text="Vowels" GridPane.rowIndex="4" />
+                  <TextField fx:id="wordsTextField" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <HBox.margin>
                   <Insets left="10.0" />
