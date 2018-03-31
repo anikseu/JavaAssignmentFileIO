@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bank.account.ui;
+package text.analyzer;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  *
  * @author kmhasan
  */
-public class BankAccountUI extends Application {
+public class TextAnalyzer extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {

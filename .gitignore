@@ -8,6 +8,15 @@
 /TextToInteger/build/
 /File IO/nbproject/private/
 /File IO/build/
+<<<<<<< HEAD
 /Bank Account UI/nbproject/private/
 /Bank Account UI/build/
 /Bank Account UI/dist/
+=======
+/Text Analyzer/nbproject/private/
+/Text Analyzer/build/
+/Text Analyzer/dist/
+>>>>>>> 3539942f3da8f74a43abc7d7b0a2709ceaab4a36
+/Assignment Demo/nbproject/private/
+/Assignment Demo/build/
+/Assignment Demo/dist/
