@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <SplitPane dividerPositions="0.37701612903225806" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment.demo.FXMLDocumentController">
    <items>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -25,7 +24,7 @@
                         <Insets bottom="5.0" />
                      </VBox.margin>
                   </TextField>
-                  <ListView fx:id="accountList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                  <ListView fx:id="accountListView" onMouseClicked="#handleListClickAction" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
          </children>

@@ -10,6 +10,7 @@ package assignment.demo;
  * @author kmhasan
  */
 public class BankAccount {
+
     private int accountNumber;
     private String accountName;
     private String address;
@@ -22,8 +23,8 @@ public class BankAccount {
         this.address = address;
         this.balance = balance;
         totalAccounts++;
-    }   
-    
+    }
+
     public BankAccount(String accountName, String address, double balance) {
         this.accountNumber = totalAccounts + 1;
         this.accountName = accountName;
@@ -51,19 +52,29 @@ public class BankAccount {
     public void setAddress(String address) {
         this.address = address;
     }
-    
+
     public String toString() {
+        return accountNumber + ": " + accountName;
+        /*
+        return "accountNumber:" + accountNumber + "\n"
+                + "accountName:" + accountName + "\n"
+                + "address:" + address.replaceAll("\n", ";") + "\n"
+                + "balance:" + balance;
+         */
+    }
+
+    public String getAllData() {
         return "accountNumber:" + accountNumber + "\n"
                 + "accountName:" + accountName + "\n"
                 + "address:" + address.replaceAll("\n", ";") + "\n"
                 + "balance:" + balance;
     }
-    
+
     public void withdraw(int amount) {
-        
+
     }
-    
+
     public void deposit(int amount) {
-        
+
     }
 }
