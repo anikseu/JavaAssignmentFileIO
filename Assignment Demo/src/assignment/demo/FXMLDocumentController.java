@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -41,14 +42,18 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextField balanceField;
     private ObservableList<BankAccount> bankAccountList;
+    private ObservableList<BankAccount> filteredBankAccountList;
     @FXML
     private ListView<BankAccount> accountListView;
+    
+    private BankAccount selectedAccount;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         bankAccountList = FXCollections.observableArrayList();
-        accountListView.setItems(bankAccountList);
-        
+        filteredBankAccountList = FXCollections.observableArrayList();
+        accountListView.setItems(filteredBankAccountList);
+
         try {
             RandomAccessFile input = new RandomAccessFile("accounts.txt", "r");
 
@@ -101,7 +106,7 @@ public class FXMLDocumentController implements Initializable {
                     balance = Double.parseDouble(tokens[1]);
                     countData++;
                 }
-                */
+                 */
 
                 if (countData % 4 == 0) {
                     BankAccount account = new BankAccount(accountNumber, accountName, address, balance);
@@ -131,6 +136,8 @@ public class FXMLDocumentController implements Initializable {
                 }
             }
 
+            filteredBankAccountList.addAll(bankAccountList);
+            
             for (int i = 0; i < bankAccountList.size(); i++) {
                 System.out.println(bankAccountList.get(i));
             }
@@ -156,6 +163,8 @@ public class FXMLDocumentController implements Initializable {
 
             output.writeBytes(account.getAllData() + "\n");
 
+            bankAccountList.add(account);
+
             output.close();
 
             clearForm();
@@ -180,10 +189,59 @@ public class FXMLDocumentController implements Initializable {
         addressArea.setText(account.getAddress().replaceAll(";", "\n"));
         balanceField.setText(account.getBalance() + "");
     }
-    
+
     @FXML
     private void handleListClickAction(MouseEvent event) {
-        BankAccount selectedAccount = accountListView.getSelectionModel().getSelectedItem();
+        selectedAccount = accountListView.getSelectionModel().getSelectedItem();
         displayData(selectedAccount);
+    }
+
+    private void filter() {
+        filteredBankAccountList.clear();
+        String name = searchField.getText().toLowerCase();
+        for (int i = 0; i < bankAccountList.size(); i++) {
+            BankAccount account = bankAccountList.get(i);
+            if (account.getAccountName().toLowerCase().contains(name))
+                filteredBankAccountList.add(account);
+        }
+    }
+    
+    @FXML
+    private void handleFilterAction(ActionEvent event) {
+        filter();
+    }
+
+    @FXML
+    private void handleResetAction(ActionEvent event) {
+        clearForm();
+        numberField.setText((BankAccount.getTotalAccounts() + 1) + "");
+    }
+
+    @FXML
+    private void handleSaveAction(ActionEvent event) {
+        String updatedAddress = addressArea.getText();
+        selectedAccount.setAddress(updatedAddress);
+
+        try {
+            RandomAccessFile output = new RandomAccessFile("accounts.txt", "rw");
+            output.setLength(0);
+
+            for (int i = 0; i < bankAccountList.size(); i++)
+                output.writeBytes(bankAccountList.get(i).getAllData() + "\n");
+
+            output.close();
+
+            clearForm();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void handleKeyFilterAction(KeyEvent event) {
+        filter();
     }
 }

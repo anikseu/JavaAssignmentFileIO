@@ -11,12 +11,17 @@ package assignment.demo;
  */
 public class BankAccount {
 
+    public static int getTotalAccounts() {
+        return totalAccounts;
+    }
+
     private int accountNumber;
     private String accountName;
     private String address;
     private double balance;
     private static int totalAccounts;
 
+    
     public BankAccount(int accountNumber, String accountName, String address, double balance) {
         this.accountNumber = accountNumber;
         this.accountName = accountName;
