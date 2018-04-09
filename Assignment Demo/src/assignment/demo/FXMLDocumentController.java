@@ -272,13 +272,37 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleSubmitAction(ActionEvent event) {
-        // WRITE YOUR CODE HERE
-        /*
-        Write the transaction into a file called
-        "transactions.txt". Each trasaction will
-        have 5 entries:
-        account_number;transaction_type;transaction_date;transaction_time;amount
-        */
+        try {
+            // WRITE YOUR CODE HERE
+            /*
+            Write the transaction into a file called
+            "transactions.txt". Each trasaction will
+            have 5 entries:
+            account_number;transaction_type;transaction_date;transaction_time;amount
+            */
+            
+            RandomAccessFile output = new RandomAccessFile("transactions.txt", "rw");
+            output.seek(output.length());
+            
+            BankAccount bankAccount = accountComboBox.getSelectionModel().getSelectedItem();
+            TransactionType transactionType = transactionTypeComboBox.getSelectionModel().getSelectedItem();
+            LocalDate transactionDate = transactionDatePicker.getValue();
+            LocalTime transactionTime = LocalTime.parse(transactionTimeField.getText());
+            double amount = Double.parseDouble(amountField.getText());
+            
+            Transaction transaction = new Transaction(bankAccount, 
+                    transactionType, 
+                    transactionDate, 
+                    transactionTime, 
+                    amount);
+            
+            output.writeBytes(transaction.getAllData() + "\n");
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 }
