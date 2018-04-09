@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +20,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -47,13 +51,34 @@ public class FXMLDocumentController implements Initializable {
     private ListView<BankAccount> accountListView;
     
     private BankAccount selectedAccount;
+    @FXML
+    private ComboBox<BankAccount> accountComboBox;
+    @FXML
+    private ComboBox<TransactionType> transactionTypeComboBox;
+    @FXML
+    private TextField amountField;
+    @FXML
+    private DatePicker transactionDatePicker;
+    @FXML
+    private TextField transactionTimeField;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         bankAccountList = FXCollections.observableArrayList();
         filteredBankAccountList = FXCollections.observableArrayList();
         accountListView.setItems(filteredBankAccountList);
-
+        accountComboBox.setItems(filteredBankAccountList);
+        
+        ObservableList<TransactionType> transactionTypeList = FXCollections.observableArrayList();
+        transactionTypeList.addAll(TransactionType.values());
+        transactionTypeComboBox.setItems(transactionTypeList);
+        
+        LocalDate currentDate = LocalDate.now();
+        transactionDatePicker.setValue(currentDate);
+        
+        LocalTime currentTime = LocalTime.now();
+        transactionTimeField.setText(currentTime.toString());
+        
         try {
             RandomAccessFile input = new RandomAccessFile("accounts.txt", "r");
 
@@ -243,5 +268,17 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleKeyFilterAction(KeyEvent event) {
         filter();
+    }
+
+    @FXML
+    private void handleSubmitAction(ActionEvent event) {
+        // WRITE YOUR CODE HERE
+        /*
+        Write the transaction into a file called
+        "transactions.txt". Each trasaction will
+        have 5 entries:
+        account_number;transaction_type;transaction_date;transaction_time;amount
+        */
+        
     }
 }
