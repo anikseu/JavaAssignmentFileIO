@@ -480,4 +480,9 @@ public class FXMLDocumentController implements Initializable {
         
         
     }
+
+    @FXML
+    private void refreshTrxList(ActionEvent event) {
+        transactionFront.setItems(getListItem());
+    }
 }
