@@ -1,11 +1,11 @@
 accountNumber:1
 accountName:Hasan Tareque
 address:24 Kemal Ataturk Avenue;Banani, Dhaka - 1213
-balance:10000.0
+balance:29000.0
 accountNumber:2
 accountName:Rakibul Hasan
 address:64 Kemal Ataturk Avenue;Banani, Dhaka - 1213
-balance:1000000.0
+balance:1000200.0
 accountNumber:3
 accountName:Md. Ashiqur Rahman
 address:1234 Shantinagar;Dhaka;Bangladesh

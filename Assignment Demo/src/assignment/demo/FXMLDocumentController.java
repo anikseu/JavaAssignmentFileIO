@@ -24,8 +24,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
@@ -61,14 +64,103 @@ public class FXMLDocumentController implements Initializable {
     private DatePicker transactionDatePicker;
     @FXML
     private TextField transactionTimeField;
+    @FXML
+    private Label returnMessage;
+    
+    
+//    @FXML
+//    private TableView<TransactionView> transactionFront;
+    @FXML
+    TableView<TransactionView> transactionFront;
+    
+     // ID
+     @FXML
+     TableColumn<TransactionView, String>  acid;
+        
+        
+         // Type
+         @FXML
+        TableColumn<TransactionView, String>  TrxType;
+        
+        // Date
+          @FXML
+        TableColumn<TransactionView, String>  Date;
+        
+        
+        // Time
+           @FXML
+        TableColumn<TransactionView, String>  Time;
+     
+        
+        // Amount
+            @FXML
+        TableColumn<TransactionView, String>  Amount;
+        
+
+
+
+
+     // Getting Transaction List from File 
+    public ObservableList<TransactionView>getListItem(){
+        ObservableList<TransactionView>item = FXCollections.observableArrayList();
+        
+           try {
+            RandomAccessFile trxfile = new RandomAccessFile("transactions.txt", "r");
+
+            while (true) {
+                String line = trxfile.readLine();
+                if (line == null) {
+                    break;
+                }
+
+                String tokens[] = line.split(";");
+                
+                item.add(new TransactionView(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4]));
+               
+            }
+    
+            } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return item; 
+    }
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        // Populating the TableView for Transaction History 
+        
+        // ID
+        acid.setCellValueFactory(new PropertyValueFactory<>("bankAccount"));
+        
+         // Type
+        TrxType.setCellValueFactory(new PropertyValueFactory<>("transactionType"));
+
+        //Date
+        Date.setCellValueFactory(new PropertyValueFactory<>("transactionDate"));
+        
+        // Time
+        Time.setCellValueFactory(new PropertyValueFactory<>("transactionTime"));
+        
+        // Amount
+        Amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        
+    
+        transactionFront.setItems(null);
+        transactionFront.setItems(getListItem());
+        
+        //transactionFront.getColumns().addAll(acid,TrxType,Date,Time,Amount); 
+       
+        
+        // END OF TRANSACTION WAR
+        
+
         bankAccountList = FXCollections.observableArrayList();
         filteredBankAccountList = FXCollections.observableArrayList();
         accountListView.setItems(filteredBankAccountList);
         accountComboBox.setItems(filteredBankAccountList);
-        
         ObservableList<TransactionType> transactionTypeList = FXCollections.observableArrayList();
         transactionTypeList.addAll(TransactionType.values());
         transactionTypeComboBox.setItems(transactionTypeList);
@@ -172,7 +264,22 @@ public class FXMLDocumentController implements Initializable {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        
+        
+        
+        
+      
+        
+       
+     
+        
     }
+    
+   
+    
+    
+
+    
 
     @FXML
     private void handleCreateAction(ActionEvent event) {
@@ -273,6 +380,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleSubmitAction(ActionEvent event) {
         try {
+            
             // WRITE YOUR CODE HERE
             /*
             Write the transaction into a file called
@@ -281,10 +389,12 @@ public class FXMLDocumentController implements Initializable {
             account_number;transaction_type;transaction_date;transaction_time;amount
             */
             
+            //double currentBalance = account.getBalance(); 
             RandomAccessFile output = new RandomAccessFile("transactions.txt", "rw");
             output.seek(output.length());
             
             BankAccount bankAccount = accountComboBox.getSelectionModel().getSelectedItem();
+            
             TransactionType transactionType = transactionTypeComboBox.getSelectionModel().getSelectedItem();
             LocalDate transactionDate = transactionDatePicker.getValue();
             LocalTime transactionTime = LocalTime.parse(transactionTimeField.getText());
@@ -296,6 +406,45 @@ public class FXMLDocumentController implements Initializable {
                     transactionTime, 
                     amount);
             
+            //Finding CurrentBalance 
+            double currentBalance=bankAccount.getBalance();
+            System.out.println("This is current Balance:" +currentBalance); 
+            
+            String decideType=transactionType.toString();
+            
+            if(decideType.equals("DEPOSIT")){
+        
+                if(bankAccount.deposit((int) amount)){
+                    //Success message
+                    returnMessage.setText("Deposit action successfully executed!");
+                }
+                else{
+                    returnMessage.setText("Invalid Amount");
+                }
+                
+                
+            }
+            
+            else if(decideType.equals("WITHDRAW")){
+                if(bankAccount.withdraw((int) amount)){
+                    //Success message
+                    returnMessage.setText("Withdraw action successfully executed!");
+                }
+                else{
+                    returnMessage.setText("Invalid Amount or Insufficient Balance");
+                }
+            }
+            
+            else{
+                // do Nothing! 
+            }
+            
+            
+            
+            
+            
+            
+            
             output.writeBytes(transaction.getAllData() + "\n");
             
         } catch (FileNotFoundException ex) {
@@ -303,6 +452,32 @@ public class FXMLDocumentController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
+        amountField.clear();
+        accountComboBox.relocate(0, 0);
+        
+        
+        
+        try {
+             RandomAccessFile outputForBalance = new RandomAccessFile("accounts.txt", "rw");
+             outputForBalance.setLength(0);
+
+              for (int i = 0; i < bankAccountList.size(); i++)
+                   outputForBalance.writeBytes(bankAccountList.get(i).getAllData() + "\n");
+
+                  outputForBalance.close();
+                    
+              
+
+                  
+
+                } catch (FileNotFoundException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+               Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+        
         
     }
 }
